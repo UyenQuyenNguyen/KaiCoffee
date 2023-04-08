@@ -1,17 +1,17 @@
 import Header from "../Component/Header"
 import Footer from "../Component/Footer"
+import BillToPay from "../Component/Bill/BillToPay"
 import BeforeHeader from "../Component/BeforeHeader"
-import SingleProduct from "../Component/DetailProduct/DetailProduct"
 
-const DetailProduct = () => {
+const Bill = () => {
     return (
         <div>
-            <BeforeHeader />
+            <BeforeHeader/>
             <Header />
-            <SingleProduct />
+            <BillToPay/>
             <Footer />
         </div>
     )
 }
 
-export default DetailProduct
+export default Bill

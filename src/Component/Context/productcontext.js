@@ -2,14 +2,16 @@ import axios from "axios";
 import { useContext, useReducer } from "react";
 import { createContext, useEffect } from "react";
 
-const AppContext = createContext();
+export const AppContext = createContext();
 const API = "https://642c508e208dfe25472d4c1e.mockapi.io/api/v1/Product";
 
 const initialState = {
     isLoading: false,
     isError: false,
-    product: [],
-    featureProduct : [],
+    products: [],
+    featureProduct: [],
+    isSingleLoading: false,
+    singleProduct: {},
 }
 
 const reducer = (state, action) => {
@@ -19,8 +21,8 @@ const reducer = (state, action) => {
                 ...state,
                 isLoading: true,
             };
-        case "SET_API_DATA" :
-            const featureData = action.payload.filter((curElem) =>{
+        case "SET_API_DATA":
+            const featureData = action.payload.filter((curElem) => {
                 return curElem.featured === true;
             });
             return {
@@ -32,13 +34,40 @@ const reducer = (state, action) => {
         case "API_ERROR":
             return {
                 ...state,
-                isLoading: false, 
+                isLoading: false,
                 isError: true,
             }
         default:
             return state;
-        }
     }
+}
+
+const Productreducer = (state, action) => {
+    switch (action.type) {
+        case "SET_SINGLE_LOADING":
+            return {
+                ...state,
+                isSingleLoading: true,
+            };
+        case "SET_SINGLE_PRODUCT":
+
+            return {
+                ...state,
+                isSingleLoading: false,
+                singleProduct: action.payload,
+            }
+        case "SET_SINGLE_ERROR":
+            return {
+                ...state,
+                isSingleLoading: false,
+                isError: true,
+            }
+        default:
+            return state;
+    }
+}
+
+
 
 const AppProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
@@ -54,18 +83,25 @@ const AppProvider = ({ children }) => {
 
     }
 
+    const getSingleProduct = async (url) => {
+        dispatch({ type: "SET_SINGLE_LOADING" });
+        try {
+            const res = await axios.get(url);
+            const singleProduct = await res.data;
+            dispatch({ type: "SET_SINGLE_PRODUCT", payload: singleProduct });
+        } catch (error) {
+            dispatch({ type: "SET_SINGLE_ERROR" })
+        }
+    }
+
     useEffect(() => {
         getProducts(API);
     }, [])
 
-    return <AppContext.Provider value={{ ...state }}>
+    return <AppContext.Provider value={{ ...state, getSingleProduct }}>
         {children}
     </AppContext.Provider>
 };
-
-export const useProductContext = () => {
-    return useContext(AppContext)
-}
 
 
 export default AppProvider

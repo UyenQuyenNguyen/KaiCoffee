@@ -4,7 +4,8 @@ import Shop  from './Pages/Shop';
 import Cart from './Pages/Cart';
 import Favourite from './Pages/Favourite';
 import Order from './Pages/Login';
-import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import Bill from './Pages/Bill';
+import { BrowserRouter as Router, Route, Link , Routes } from "react-router-dom";
 import LoginAccount from './Pages/Login';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
                 <Route path="/Favourite" element={<Favourite />} />
                 <Route path="/Order" element={<Order />} />
                 <Route path="/LoginAccount" element={<LoginAccount />} />
+                <Route path="/Bill" element={<Bill />} />
             </Routes>
         </Router>
   );

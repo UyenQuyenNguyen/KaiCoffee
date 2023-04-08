@@ -108,13 +108,12 @@ const Register = () => {
     }, [])
 
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(user, pass)
         if (user === username && pass === paswrd) {
             setSucess(true);
             setLogin(true);
-            console.log(login)
+            console.log(login);
         } else {
             setErrMsg("Invailid username or password");
         }
@@ -145,7 +144,7 @@ const Register = () => {
             {success ? (
                 <ResMain>
                     <img src={require('../images/Logged.png')} alt="" />
-                    <a href="http://localhost:3001/Shop">
+                    <a href="/Shop">
                         <IconButton
                             sx={{
                                 width: "5rem", height: "5rem", color: "#206f82", marginBottom: "-4rem",

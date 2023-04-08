@@ -3,6 +3,7 @@ import { CartContext } from "../Context/cartcontext"
 import styled from "styled-components";
 import { Container } from "@mui/material";
 import { Link } from 'react-router-dom';
+import { FavouContext } from "../Context/favoucontext";
 
 
 const Card = styled.div`
@@ -72,9 +73,11 @@ const ViewHeight = styled.div`
 `
 
 const Favo = () => {
+    const Favoustate = useContext(FavouContext);
+    const state = Favoustate.state;
+    const dispatch = Favoustate.dispatch;
     const Globalstate = useContext(CartContext);
-    const state = Globalstate.state;
-    const dispatch = Globalstate.dispatch;
+    const Glodispatch = Globalstate.dispatch;
     return (
         <Container maxWidth="lg" sx={{ paddingTop: "7rem", display: "flex", flexDirection: "column" }}>
             <ViewHeight>
@@ -88,8 +91,7 @@ const Favo = () => {
                             </Des>
                         </Info>
                         <Price>
-                            <p>{item.quantity * item.price}</p>
-                            <Buy onClick={() => dispatch({ type: "ADD", payload: item })}>Add to Cart</Buy>
+                            <Buy onClick={() => Glodispatch({ type: "ADD", payload: item })}>Add to Cart</Buy>
                             <RmBtn onClick={() => dispatch({ type: "REMOVE", payload: item })}>Remove</RmBtn>
                         </Price>
                     </Card>
@@ -97,7 +99,7 @@ const Favo = () => {
                 {state.length === 0 && (
                     <Empty>
                         <img src="https://cdn.dribbble.com/users/463734/screenshots/2016814/no-favourites_shot.png?compress=1&resize=400x300&vertical=top" />
-                        <Link to="http://localhost:3001/Shop"><Buy>Go to Shop</Buy></Link>
+                        <Link to="/Shop"><Buy>Go to Shop</Buy></Link>
                     </Empty>
                 )}
             </ViewHeight>

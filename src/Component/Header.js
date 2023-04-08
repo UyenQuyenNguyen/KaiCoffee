@@ -71,8 +71,8 @@ function Header() {
         <AppBar style={{ background: 'white', marginTop: '30px', color: 'black', zIndex: '100', borderBottom: '1px groove #FFFCF6', boxShadow: 'none' }} position="fixed">
             <Container maxWidth="lg">
                 <Toolbar disableGutters>
-                    <a href='http://localhost:3000/'><img style={{ width: "50px" }} src={require('../images/MyLogo.png')} sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /></a>
-                    <a href='http://localhost:3000/'><img style={{ width: '150px' }} src={require('../images/KaiCoffee.png')} sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /></a>
+                    <a href='/'><img style={{ width: "50px" }} src={require('../images/MyLogo.png')} sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /></a>
+                    <a href='/'><img style={{ width: '150px' }} src={require('../images/KaiCoffee.png')} sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /></a>
                     <Box sx={{ flexGrow: 0, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
@@ -125,14 +125,14 @@ function Header() {
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
-                        <Link to={"http://localhost:3000/LoginAccount"}>
+                        <Link to={"/LoginAccount"}>
                             <IconButton aria-label="cart">
                                 <StyledBadge badgeContent={count} sx={{ color: "#206f82" }}>
                                     <PersonOutlineOutlinedIcon sx={{ color: "#206f82" }} />
                                 </StyledBadge>
                             </IconButton>
                         </Link>
-                        <Link to={"http://localhost:3000/Cart"}>
+                        <Link to={"/Cart"}>
                             <IconButton aria-label="cart">
                                 <StyledBadge badgeContent={count} sx={{ color: "#206f82" }}>
                                     <ShoppingCartIcon />

@@ -3,7 +3,8 @@ import { CartContext } from "../Context/cartcontext"
 import styled from "styled-components";
 import { Container } from "@mui/material";
 import { Link } from 'react-router-dom';
-
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 const Card = styled.div`
     width: 100%;
@@ -122,13 +123,13 @@ const CartPro = () => {
                 {state.length == 0 && (
                     <Empty>
                         <img src="https://www.clickscreative.com/images/empty-cart.png" />
-                        <Link to="http://localhost:3001/Shop"><Buy>Go to Shop</Buy></Link>
+                        <Link to="/Shop"><Buy>Go to Shop</Buy></Link>
                     </Empty>
                 )}
                 {state.length > 0 && (
                     <Total>
                         <h3 style={{ margin: "16px 0" }}>Total: {total}</h3>
-                        <Link to="http://localhost:3001/Order"><Buy>Order</Buy></Link>
+                        <Link to="/Bill"><Buy>Order</Buy></Link>
                     </Total>
                 )
                 }
@@ -138,3 +139,4 @@ const CartPro = () => {
 }
 
 export default CartPro
+

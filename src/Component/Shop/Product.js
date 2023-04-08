@@ -12,6 +12,8 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import Filter from './Filter';
 import { CartContext } from '../Context/cartcontext';
 import { LoginContext } from '../Context/logincontext';
+import { AppContext } from '../Context/productcontext';
+import { FavouContext } from '../Context/favoucontext';
 
 const Card = styled.div`
     display: flex;
@@ -53,24 +55,16 @@ const BtnFeature = styled.div`
     background-color: #206f82;
 `
 
+
+
 const Product = () => {
-    const [loading, setLoading] = useState(false);
-    const [product, setProduct] = useState([]);
-    const [show, setShow] = useState(false);
-    useEffect((() => {
-        axios({
-            method: "GET",
-            url: "https://642c508e208dfe25472d4c1e.mockapi.io/api/v1/Product"
-        })
-            .then((reponse) => {
-                setProduct(reponse.data);
-            })
-            .catch((e) => console.log(e))
-            .finally(() => setLoading(false));
-    }), []);
+    const { isLoading, products } = React.useContext(AppContext);
+
 
     const Globalstate = React.useContext(CartContext);
     const dispatch = Globalstate.dispatch;
+    const Favoustate = React.useContext(FavouContext);
+    const getFavou = Favoustate.dispatch;
 
     const { login } = React.useContext(LoginContext)
 
@@ -78,14 +72,8 @@ const Product = () => {
         <Container maxWidth="false" sx={{ marginTop: '3rem', display: 'flex' }}>
             <Filter />
             <Box maxWidth="lg" sx={{ flexGrow: 1 }}>
-                {loading && (
-                    <div>
-                        {" "}
-                        <h1>Loading...</h1>
-                    </div>
-                )}
                 <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 6, sm: 6, md: 12 }}>
-                    {product.map((item, index) => {
+                    {products.map((item, index) => {
                         item.quantity = 1;
                         return (
                             <Grid item xs={12} sm={6} md={4} key={index}>
@@ -95,13 +83,13 @@ const Product = () => {
                                         <img style={{ width: '300px' }} src={item.img} alt="" />
                                         <BtnFeature>
                                             <IconButton sx={{ width: '52px', height: "52px", color: "white" }}
-                                                onClick={() => dispatch({ type: "ADD", payload: item })}>
+                                                onClick={() => getFavou({ type: "ADD", payload: item })}>
                                                 <FavoriteBorderIcon />
                                             </IconButton>
                                             <IconButton
                                                 sx={{ width: '52px', height: "52px", color: "white" }}
                                                 onClick={() => {
-                                                    if (login === false) {
+                                                    if (login !== true) {
                                                         dispatch({ type: "ADD", payload: item })
                                                     } else {
                                                         alert("Login, please")

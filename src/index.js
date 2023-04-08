@@ -6,18 +6,20 @@ import CartProvider from './Component/Context/cartcontext';
 import FavouProvider from './Component/Context/favoucontext';
 import LoginProvider from './Component/Context/logincontext';
 import AppProvider from './Component/Context/productcontext';
-
+import CustomerProvider from './Component/Context/customercontext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <div>
         <AppProvider>
-        <CartProvider>
-            <LoginProvider>
+            <CartProvider>
                 <FavouProvider>
-                    <App />
+                    <LoginProvider>
+                        <CustomerProvider>
+                            <App />
+                        </CustomerProvider>
+                    </LoginProvider>
                 </FavouProvider>
-            </LoginProvider>
-        </CartProvider>
+            </CartProvider>
         </AppProvider>
     </div >
 );
