@@ -9,15 +9,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import { createTheme } from '@mui/system';
-import { styled as format } from 'styled-components';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import Badge from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Link } from 'react-router-dom';
-import { CartContext } from './Context/cartcontext';
 import { useContext } from 'react';
+import { LoginContext } from './Context/logincontext';
 
 const pages = [
     {
@@ -63,8 +61,8 @@ function Header() {
         },
     }));
 
-    const Globalstate = useContext(CartContext);
-    const state = Globalstate.state;
+    const { login} = useContext(LoginContext)
+    console.log(login);
 
 
     return (
@@ -125,13 +123,19 @@ function Header() {
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
-                        <Link to={"/LoginAccount"}>
-                            <IconButton aria-label="cart">
-                                <StyledBadge badgeContent={count} sx={{ color: "#206f82" }}>
-                                    <PersonOutlineOutlinedIcon sx={{ color: "#206f82" }} />
-                                </StyledBadge>
-                            </IconButton>
-                        </Link>
+                        {login ? (<>
+                            <h3>Welcome, Uyen Quyen</h3>
+                        </>) : (
+                            <>
+                                <Link to={"/LoginAccount"}>
+                                    <IconButton aria-label="cart">
+                                        <StyledBadge badgeContent={count} sx={{ color: "#206f82" }}>
+                                            <PersonOutlineOutlinedIcon sx={{ color: "#206f82" }} />
+                                        </StyledBadge>
+                                    </IconButton>
+                                </Link>
+                            </>
+                        )}
                         <Link to={"/Cart"}>
                             <IconButton aria-label="cart">
                                 <StyledBadge badgeContent={count} sx={{ color: "#206f82" }}>

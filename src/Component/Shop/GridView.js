@@ -81,7 +81,7 @@ const GridView = ({ products }) => {
                                         <IconButton
                                             sx={{ width: '52px', height: "52px", color: "white" }}
                                             onClick={() => {
-                                                if (login !== true) {
+                                                if (login === true) {
                                                     dispatch({ type: "ADD", payload: item })
                                                 } else {
                                                     alert("Login, please")

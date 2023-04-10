@@ -17,7 +17,7 @@ root.render(
                     <LoginProvider>
                         <CustomerProvider>
                             <FilterProvider>
-                            <App />
+                                <App />
                             </FilterProvider>
                         </CustomerProvider>
                     </LoginProvider>

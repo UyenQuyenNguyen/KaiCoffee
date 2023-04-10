@@ -101,18 +101,18 @@ const Register = () => {
     const [success, setSucess] = useState(false);
     const username = "UyenQuyen"
     const paswrd = "quyen123"
-    const {login, setLogin} = React.useContext(LoginContext)
+    const { login, setLogin } = React.useContext(LoginContext)
 
     useEffect(() => {
         userRef.current.focus();
     }, [])
 
-
+    // setLogin(true);
     const handleSubmit = (e) => {
         e.preventDefault();
         if (user === username && pass === paswrd) {
             setSucess(true);
-            setLogin(true);
+
             console.log(login);
         } else {
             setErrMsg("Invailid username or password");

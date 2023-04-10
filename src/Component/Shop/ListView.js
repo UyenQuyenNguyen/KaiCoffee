@@ -77,7 +77,7 @@ const ListView = ({ products }) => {
                                 <IconButton
                                     sx={{ width: '52px', height: "52px" }}
                                     onClick={() => {
-                                        if (login !== true) {
+                                        if (login === true) {
                                             dispatch({ type: "ADD", payload: item })
                                         } else {
                                             alert("Login, please")

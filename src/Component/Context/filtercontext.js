@@ -7,7 +7,7 @@ const initialState = {
     filter_products: [],
     all_products: [],
     list_view: false,
-    filters:{text: "", classtify: "All"},
+    filters: { text: "", classtify: "All", price: 0, minPrice: 38000, maxPrice: 80000},
 };
 
 export const FilterProvider = ({ children }) => {
@@ -25,34 +25,40 @@ export const FilterProvider = ({ children }) => {
                     ...state,
                     list_view: false,
                 }
-            case "SET_LISTVIEW": 
+            case "SET_LISTVIEW":
                 return {
                     ...state,
                     list_view: true,
                 }
             case "UPDATE_FILTERS_VALUE":
-                const{name, value} = action.payload;
+                const { name, value } = action.payload;
                 return {
                     ...state,
                     filters: {
-                        ...state.filters, 
+                        ...state.filters,
                         [name]: value,
-                    }
+                    },
                 }
             case "FILTER_PRODUCT":
-                let {all_products} = state;
+                let { all_products } = state;
                 let tempFilterProduct = [...all_products];
-                const {text, classtify} = state.filters;
-                if(text) {
-                    tempFilterProduct = tempFilterProduct.filter((crrElem) =>{
+                const { text, classtify, price } = state.filters;
+                if (text) {
+                    tempFilterProduct = tempFilterProduct.filter((crrElem) => {
                         return crrElem.name.toLowerCase().includes(text);
                     })
                 }
-                if(classtify){
-                    tempFilterProduct = tempFilterProduct.filter((crrElem) =>{
-                        return crrElem.classtify === classtify;
-                    })
+                if (classtify !== "All") {
+                    tempFilterProduct = tempFilterProduct.filter(
+                        (curElem) => curElem.classtify === classtify);
                 }
+                if(price === 0){
+                    tempFilterProduct = tempFilterProduct.filter((curElem)=> curElem.price === price)
+                }
+                else {
+                    tempFilterProduct = tempFilterProduct.filter((curElem) => curElem.price <= price)
+                }
+
                 return {
                     ...state,
                     filter_products: tempFilterProduct,
@@ -73,16 +79,15 @@ export const FilterProvider = ({ children }) => {
         return dispatch({ type: "SET_LISTVIEW" })
     }
 
-    const updateFilterValue = (event) =>{
+    const updateFilterValue = (event) => {
         let name = event.target.name;
         let value = event.target.value;
+        return dispatch({ type: "UPDATE_FILTERS_VALUE", payload: { name, value } });
+    };
 
-        return dispatch({type: "UPDATE_FILTERS_VALUE", payload :{name, value} })
-    }
-
-    useEffect(() =>{
-        dispatch({type: "FILTER_PRODUCT"})
-    }, [products, state.filters])
+    useEffect(() => {
+        dispatch({ type: "FILTER_PRODUCT" })
+    }, [state.filters])
 
     useEffect(() => {
         dispatch({ type: "LOAD_FILTER_PRODUCTS", payload: products });
