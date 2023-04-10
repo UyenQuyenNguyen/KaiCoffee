@@ -10,9 +10,7 @@ const Main = styled.div`
 
 const Introduce = () => {
     return (
-        <Main>
-            
-
+        <Main>        
         </Main>
     )
 }

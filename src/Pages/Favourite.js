@@ -9,7 +9,6 @@ const Favourite = () =>{
             <BeforeHeader/>
             <Header/>
             <Favo/>
-            <SingleProduct />
             <Footer/>
         </div>
     )

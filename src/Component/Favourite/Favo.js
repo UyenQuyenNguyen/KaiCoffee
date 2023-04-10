@@ -98,7 +98,7 @@ const Favo = () => {
                 })}
                 {state.length === 0 && (
                     <Empty>
-                        <img src="https://cdn.dribbble.com/users/463734/screenshots/2016814/no-favourites_shot.png?compress=1&resize=400x300&vertical=top" />
+                        <img src="https://cdn.dribbble.com/users/12570/screenshots/13987694/media/1635918fab6854e489723a301619b7b2.jpg?compress=1&resize=400x300&vertical=top" />
                         <Link to="/Shop"><Buy>Go to Shop</Buy></Link>
                     </Empty>
                 )}

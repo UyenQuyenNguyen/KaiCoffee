@@ -37,20 +37,12 @@ const reducer = (state, action) => {
                 isLoading: false,
                 isError: true,
             }
-        default:
-            return state;
-    }
-}
-
-const Productreducer = (state, action) => {
-    switch (action.type) {
         case "SET_SINGLE_LOADING":
             return {
                 ...state,
                 isSingleLoading: true,
             };
         case "SET_SINGLE_PRODUCT":
-
             return {
                 ...state,
                 isSingleLoading: false,
@@ -66,7 +58,6 @@ const Productreducer = (state, action) => {
             return state;
     }
 }
-
 
 
 const AppProvider = ({ children }) => {
@@ -88,7 +79,7 @@ const AppProvider = ({ children }) => {
         try {
             const res = await axios.get(url);
             const singleProduct = await res.data;
-            dispatch({ type: "SET_SINGLE_PRODUCT", payload: singleProduct });
+            dispatch({ type: "SET_SINGLE_PRODUCT", payload: singleProduct[0] });
         } catch (error) {
             dispatch({ type: "SET_SINGLE_ERROR" })
         }

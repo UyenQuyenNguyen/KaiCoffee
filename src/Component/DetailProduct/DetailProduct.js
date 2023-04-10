@@ -2,28 +2,100 @@ import styled from "styled-components"
 import * as React from 'react';
 import { useParams } from "react-router-dom";
 import { AppContext } from "../Context/productcontext";
+import { Container } from "@mui/material";
+import { CartContext } from "../Context/cartcontext";
+import { FavouContext } from "../Context/favoucontext";
+import IconButton from '@mui/material/IconButton';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
+const ViewHeight = styled.div`
+    min-height: 68vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+const Buy = styled.button`
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: #206f82;
+    width: 8rem;
+    height: 2.5rem;
+    cursor: pointer;
+    margin-right: 16px;
+`
+
+const InfoProduct = styled.div`
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+`
+
+const FeatureBtn = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+`
+
 
 const API = "https://642c508e208dfe25472d4c1e.mockapi.io/api/v1/Product"
-const SingleProduct = () =>{
+const SingleProduct = () => {
     const { getSingleProduct, isSingleLoading, singleProduct } = React.useContext(AppContext)
 
-    const {id} = useParams();
+    const { id } = useParams();
 
-    const {
-        id: name,
+
+    const { id: alias,
+        name,
         img,
-        description,
         price,
-        classtify,
+        description,
+        classtify
     } = singleProduct;
 
 
-    React.useEffect(() =>{
-        getSingleProduct(`${API}?id=${id}`);
-    }, []);
+    const Globalstate = React.useContext(CartContext);
+    const dispatch = Globalstate.dispatch;
+    const Favoustate = React.useContext(FavouContext);
+    const getFavou = Favoustate.dispatch;
 
-    return(
-        <h1>Single Page {name}</h1>
+    React.useEffect(() => {
+        getSingleProduct(`${API}?id=${id}`);
+    }, [])
+
+    return (
+        <Container maxWidth="lg" sx={{ paddingTop: "7rem", display: "flex", flexDirection: "column" }}>
+            <ViewHeight>
+                {isSingleLoading ? (
+                    <h1>Loading...</h1>
+                ) : (
+                    <>
+                        <img style={{ marginRight: '1.5rem' }} src={img} />
+                        <InfoProduct>
+                            <h1>{name}</h1>
+                            <p>{description}</p>
+                            <p>{price}VND</p>
+                            <FeatureBtn>
+                                <Buy onClick={() => { dispatch({ type: "ADD", payload: singleProduct }) }}>Add to Cart</Buy>
+                                <IconButton sx={{ width: '52px', height: "52px" }}
+                                    onClick={() => getFavou({ type: "ADD", payload: singleProduct })}   >
+                                    <FavoriteBorderIcon />
+                                </IconButton>
+                            </FeatureBtn>
+                            <p>Kai Coffee cung cấp đa dạng thức uống phong phú, từ cà phê espresso, cappuccino, latte đến các loại trà, thức uống đặc biệt và sinh tố tươi. Bạn cũng có thể tùy chọn thêm các loại syrups hương vị như vani, caramel hoặc hạt dẻ để tùy chỉnh thêm hương vị mình thích.
+
+
+                                Với sự đa dạng trong menu, chúng tôi tự tin sẽ có thức uống phù hợp với mọi khẩu vị và mong muốn của khách hàng. Hãy đến và thưởng thức những thức uống tuyệt vời của chúng tôi trong khung cảnh thân thiện và ấm áp của quán cafe.</p>
+                        </InfoProduct>
+
+
+                    </>
+                )}
+            </ViewHeight>
+        </Container>
+
     )
 }
 

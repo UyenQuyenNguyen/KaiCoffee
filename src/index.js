@@ -7,6 +7,7 @@ import FavouProvider from './Component/Context/favoucontext';
 import LoginProvider from './Component/Context/logincontext';
 import AppProvider from './Component/Context/productcontext';
 import CustomerProvider from './Component/Context/customercontext';
+import FilterProvider from './Component/Context/filtercontext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <div>
@@ -15,7 +16,9 @@ root.render(
                 <FavouProvider>
                     <LoginProvider>
                         <CustomerProvider>
+                            <FilterProvider>
                             <App />
+                            </FilterProvider>
                         </CustomerProvider>
                     </LoginProvider>
                 </FavouProvider>

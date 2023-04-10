@@ -129,7 +129,7 @@ const CartPro = () => {
                 {state.length > 0 && (
                     <Total>
                         <h3 style={{ margin: "16px 0" }}>Total: {total}</h3>
-                        <Link to="/Bill"><Buy>Order</Buy></Link>
+                        <Link to="/InforUser"><Buy>Order</Buy></Link>
                     </Total>
                 )
                 }
