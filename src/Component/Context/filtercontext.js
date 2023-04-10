@@ -7,7 +7,7 @@ const initialState = {
     filter_products: [],
     all_products: [],
     list_view: false,
-    filters: { text: "", classtify: "All", price: 0, minPrice: 38000, maxPrice: 80000},
+    filters: { text: "", classtify: "All", price: 69000, minPrice: 38000, maxPrice: 80000 },
 };
 
 export const FilterProvider = ({ children }) => {
@@ -42,7 +42,7 @@ export const FilterProvider = ({ children }) => {
             case "FILTER_PRODUCT":
                 let { all_products } = state;
                 let tempFilterProduct = [...all_products];
-                const { text, classtify, price } = state.filters;
+                const { text, classtify, price, savor } = state.filters;
                 if (text) {
                     tempFilterProduct = tempFilterProduct.filter((crrElem) => {
                         return crrElem.name.toLowerCase().includes(text);
@@ -52,12 +52,17 @@ export const FilterProvider = ({ children }) => {
                     tempFilterProduct = tempFilterProduct.filter(
                         (curElem) => curElem.classtify === classtify);
                 }
-                if(price === 0){
-                    tempFilterProduct = tempFilterProduct.filter((curElem)=> curElem.price === price)
+
+                if (price === 0) {
+                    tempFilterProduct = tempFilterProduct.filter(
+                        (curElem) => curElem.price == price
+                    );
+                } else {
+                    tempFilterProduct = tempFilterProduct.filter(
+                        (curElem) => curElem.price <= price
+                    );
                 }
-                else {
-                    tempFilterProduct = tempFilterProduct.filter((curElem) => curElem.price <= price)
-                }
+
 
                 return {
                     ...state,
@@ -82,6 +87,8 @@ export const FilterProvider = ({ children }) => {
     const updateFilterValue = (event) => {
         let name = event.target.name;
         let value = event.target.value;
+        console.log(name);
+        console.log(value);
         return dispatch({ type: "UPDATE_FILTERS_VALUE", payload: { name, value } });
     };
 

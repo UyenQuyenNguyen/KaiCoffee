@@ -24,17 +24,17 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const Footer = () => {
-    const aboutus = ["Grift Card", "Our Story", "Partners", "Careers", "Affiliate Program"];
-    const quicklink = ["How to Buy", "Payment", "Delivery", "Gift Receipt", "My Account"];
-    const help = ["FAQs", "Delivery", "Payment", "Returns", "Contact Us"];
+    const aboutus = ["Grift Card", "Our Story", "Partners", "Careers"];
+    const quicklink = ["How to Buy", "Payment", "Delivery", "My Account"];
+    const help = ["FAQs", "Delivery", "Payment", "Contact Us"];
     return (
-        <Container maxWidth="lg">
+        <Container maxWidth="lg" sx={{marginTop: '2rem'}}>
             <Box sx={{ width: '100%' }}>
                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                     <Grid item xs={3}>
                         <Item sx={{ textAlign: "center" }}>
                             <img src={require('../images/Logo2.png')} style={{ width: "50px" }} alt="" />
-                            <p style={{fontSize: '14px'}}>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                            <p style={{fontSize: '14px', margin: "12px 0"}}>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
                             <div>
                                 <a style={{ color: 'black', marginRight: '8px', textDecoration: 'none' }} href="https://www.facebook.com/uynwiin2502.03"><FacebookIcon sx={{ fontSize: '16px' }} /></a>
                                 <a style={{ color: 'black', marginRight: '8px', textDecoration: 'none' }} href="https://www.instagram.com/only.52hzblue/"> <InstagramIcon sx={{ fontSize: '16px' }} /></a>
@@ -46,7 +46,7 @@ const Footer = () => {
                         <Item>
                             <h3>Our Store</h3>
                             {aboutus.map((item,id) => (
-                                <a key={id} style={{ color: 'black', marginBottom: '8px', textDecoration: 'none', fontSize: '14px' }} href="">{item}</a>
+                                <a key={id} style={{ color: 'black', margin: '8px 0', textDecoration: 'none', fontSize: '14px' }} href="">{item}</a>
                             ))}
                         </Item>
                     </Grid>
@@ -54,7 +54,7 @@ const Footer = () => {
                         <Item>
                             <h3>Quick Links</h3>
                             {quicklink.map((item, id) => (
-                                <a key={id} style={{ color: 'black', marginBottom: '8px', textDecoration: 'none', fontSize: '14px' }} href="">{item}</a>
+                                <a key={id} style={{ color: 'black', margin: '8px 0', textDecoration: 'none', fontSize: '14px' }} href="">{item}</a>
                             ))}
                         </Item>
                     </Grid>
@@ -62,7 +62,7 @@ const Footer = () => {
                         <Item>
                             <h3>Help</h3>
                             {help.map((item, id) => (
-                                <a key={id} style={{ color: 'black', marginBottom: '8px', textDecoration: 'none', fontSize: '14px' }} href="">{item}</a>
+                                <a key={id} style={{ color: 'black', margin: '8px 0', textDecoration: 'none', fontSize: '14px' }} href="">{item}</a>
                             ))}
                         </Item>
                     </Grid>

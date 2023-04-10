@@ -16,6 +16,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
 import TextField from '@mui/material/TextField';
+import FormatPrice from "../../Helpers/FormatPrice";
 
 const Button = styled.button`
     border: none;
@@ -58,7 +59,7 @@ const Filter = () => {
 
     const categoryOnlyData = getUniqueData(all_products, "classtify")
     return (
-        <Container maxWidth="sm"  >
+        <Container maxWidth="xs"  >
             <Box width={300} sx={{ position: "sticky", top: "8rem" }}>
                 <form onSubmit={(e) => e.preventDefault()}>
                     <TextField
@@ -72,7 +73,7 @@ const Filter = () => {
                         sx={{ marginBottom: "24px", width: "100%" }} />
                 </form>
                 <p>Filter by price</p>
-                <p style={{marginTop: "16px"}}>{price}</p>
+                <p style={{ marginTop: "16px" }}><FormatPrice price={price} /></p>
                 <Slider
                     size="small"
                     name="price"
@@ -80,7 +81,7 @@ const Filter = () => {
                     max={maxPrice}
                     value={price}
                     onChange={updateFilterValue}
-                    defaultValue={70}
+                    defaultValue={maxPrice}
                     aria-label="Small"
                     valueLabelDisplay="auto"
                     sx={{ color: "#206f82", marginTop: '16px' }}
@@ -94,7 +95,7 @@ const Filter = () => {
                     }>
                     <ListItemButton onClick={handleClick}>
                         <ListItemIcon>
-                            <InboxIcon sx={{ color: "#206f82"}}/>
+                            <InboxIcon sx={{ color: "#206f82" }} />
                         </ListItemIcon>
                         <ListItemText primary="Classtify" />
                         {open ? <ExpandLess /> : <ExpandMore />}
@@ -103,38 +104,10 @@ const Filter = () => {
                         <List component="div" disablePadding>
                             {categoryOnlyData.map((curElem, index) => {
                                 return <Button key={index} sx={{ pl: 4 }} name="classtify" value={curElem} onClick={updateFilterValue}>
-                                    <StarBorder sx={{ color: "#206f82", marginRight: "12px"}} />{curElem}
+                                    <StarBorder sx={{ color: "#206f82", marginRight: "12px" }} />{curElem}
                                 </Button>
                             })}
                         </List>
-                    </Collapse>
-                    <ListItemButton onClick={handleClick1}>
-                        <ListItemIcon>
-                            <InboxIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Savor" />
-                        {open1 ? <ExpandLess /> : <ExpandMore />}
-                    </ListItemButton>
-                    <Collapse in={open1} timeout="auto" unmountOnExit>
-
-                        <ListItemButton sx={{ pl: 4 }}>
-                            <ListItemIcon>
-                                <StarBorder />
-                            </ListItemIcon>
-                            <ListItemText primary="Matcha" />
-                        </ListItemButton>
-                        <ListItemButton sx={{ pl: 4 }}>
-                            <ListItemIcon>
-                                <StarBorder />
-                            </ListItemIcon>
-                            <ListItemText primary="Chocolate" />
-                        </ListItemButton>
-                        <ListItemButton sx={{ pl: 4 }}>
-                            <ListItemIcon>
-                                <StarBorder />
-                            </ListItemIcon>
-                            <ListItemText primary="Blueberry" />
-                        </ListItemButton>
                     </Collapse>
                 </List>
 

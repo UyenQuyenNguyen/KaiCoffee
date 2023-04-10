@@ -1,17 +1,19 @@
 import styled from "styled-components"
 import React from "react";
 import Grid from '@mui/material/Grid';
-import { Container } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import Filter from './Filter';
 import { Link, NavLink } from 'react-router-dom';
 import { CartContext } from '../Context/cartcontext';
 import { LoginContext } from '../Context/logincontext';
-import { AppContext } from '../Context/productcontext';
 import { FavouContext } from '../Context/favoucontext';
+import FormatPrice from "../../Helpers/FormatPrice";
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 const Card = styled.div`
     display: flex;
@@ -52,7 +54,9 @@ const BtnFeature = styled.div`
     transition: 2s;
     background-color: #206f82;
 `
-
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const GridView = ({ products }) => {
 
@@ -61,6 +65,25 @@ const GridView = ({ products }) => {
     const Favoustate = React.useContext(FavouContext);
     const getFavou = Favoustate.dispatch;
 
+    const [open, setOpen] = React.useState(false);
+    const Favou = (item) => {
+        setOpen(true);
+        getFavou({ type: "ADD", payload: item })
+    };
+
+    const Cart = (item) =>{
+        setOpen(true);
+        dispatch({ type: "ADD", payload: item })
+    }
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
     const { login } = React.useContext(LoginContext)
     return (
         <>
@@ -68,26 +91,19 @@ const GridView = ({ products }) => {
                 {products.map((item, index) => {
                     item.quantity = 1;
                     return (
-                        <Grid item xs={12} sm={6} md={4} key={item.id}>
+                        <Grid item xs={12} md={4} key={item.id}>
                             <Card>
                                 <ImgDiv
                                 >
                                     <Link to={`/DetailProduct/${item.id}`}><img style={{ width: '300px' }} src={item.img} alt="" /></Link>
                                     <BtnFeature>
                                         <IconButton sx={{ width: '52px', height: "52px", color: "white" }}
-                                            onClick={() => getFavou({ type: "ADD", payload: item })}>
+                                            onClick={()=>Favou(item)}>
                                             <FavoriteBorderIcon />
                                         </IconButton>
                                         <IconButton
                                             sx={{ width: '52px', height: "52px", color: "white" }}
-                                            onClick={() => {
-                                                if (login === true) {
-                                                    dispatch({ type: "ADD", payload: item })
-                                                } else {
-                                                    alert("Login, please")
-                                                    console.log(login)
-                                                }
-                                            }}
+                                            onClick={() => {Cart(item)}}
                                         >
                                             <AddShoppingCartOutlinedIcon />
                                         </IconButton>
@@ -100,12 +116,17 @@ const GridView = ({ products }) => {
                                 <Des_pro>
                                     <h4 style={{ margin: "8px 0" }}>{item.name}</h4>
                                     <p style={{ margin: "8px 0" }}>{item.description}</p>
-                                    <p>{item.price}VND</p>
+                                    <p><FormatPrice price={item.price} /></p>
                                 </Des_pro>
                             </Card>
                         </Grid>
                     )
                 })}
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="success" sx={{ width: '100%', backgroundColor: "#206f82"}}>
+                    Item has been added !
+                    </Alert>
+                </Snackbar>
             </Grid>
         </>
     )

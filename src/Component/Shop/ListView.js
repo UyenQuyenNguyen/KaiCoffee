@@ -8,6 +8,9 @@ import { Link, NavLink } from 'react-router-dom';
 import { CartContext } from '../Context/cartcontext';
 import { LoginContext } from '../Context/logincontext';
 import { FavouContext } from '../Context/favoucontext';
+import FormatPrice from "../../Helpers/FormatPrice";
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 
 const List = styled.div`
@@ -41,7 +44,9 @@ const Flex = styled.div`
     justify-content: flex-start;
 `
 
-
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 
 const ListView = ({ products }) => {
@@ -50,6 +55,24 @@ const ListView = ({ products }) => {
     const dispatch = Globalstate.dispatch;
     const Favoustate = React.useContext(FavouContext);
     const getFavou = Favoustate.dispatch;
+    const [open, setOpen] = React.useState(false);
+    const Favou = (item) => {
+        setOpen(true);
+        getFavou({ type: "ADD", payload: item })
+    };
+
+    const Cart = (item) => {
+        setOpen(true);
+        dispatch({ type: "ADD", payload: item })
+    }
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
 
     const { login } = React.useContext(LoginContext)
     return (
@@ -66,24 +89,17 @@ const ListView = ({ products }) => {
                                 <Des_pro>
                                     <h3 style={{ margin: "8px 0" }}>{item.name}</h3>
                                     <p style={{ margin: "8px 0" }}>{item.description}</p>
-                                    <p>{item.price}VND</p>
+                                    <p><FormatPrice price={item.price} /></p>
                                 </Des_pro>
                             </Flex>
                             <BtnFeature>
                                 <IconButton sx={{ width: '52px', height: "52px" }}
-                                    onClick={() => getFavou({ type: "ADD", payload: item })}>
+                                    onClick={() => Favou(item)}>
                                     <FavoriteBorderIcon />
                                 </IconButton>
                                 <IconButton
                                     sx={{ width: '52px', height: "52px" }}
-                                    onClick={() => {
-                                        if (login === true) {
-                                            dispatch({ type: "ADD", payload: item })
-                                        } else {
-                                            alert("Login, please")
-                                            console.log(login)
-                                        }
-                                    }}
+                                    onClick={() => { Cart(item) }}
                                 >
                                     <AddShoppingCartOutlinedIcon />
                                 </IconButton>
@@ -95,6 +111,11 @@ const ListView = ({ products }) => {
                         </Card>
                     )
                 })}
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="success" sx={{ width: '100%', backgroundColor: "#206f82" }}>
+                        Item has been added !
+                    </Alert>
+                </Snackbar>
             </List>
         </>
     )

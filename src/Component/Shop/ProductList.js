@@ -18,7 +18,7 @@ const FeatureNav = styled.div`
 const ProductList = () => {
     const { filter_products, list_view, setGridView, setListView } = useContext(FilterContext)
     return (
-        <Box maxWidth="lg" sx={{ flexGrow: 1 }}>
+        <Box maxWidth="xl" sx={{ flexGrow: 1 }}>
             <FeatureNav>
                 <IconButton sx={{ width: '52px', height: "52px" }}
                     onClick={setListView}>

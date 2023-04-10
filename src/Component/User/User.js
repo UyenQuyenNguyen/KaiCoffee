@@ -9,6 +9,7 @@ import { CustomerContext } from "../Context/customercontext";
 import Box from "@mui/material/Box";
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
+import { Wrapper, Status } from "@googlemaps/react-wrapper";
 
 const Height = styled.div`
     min-height: 70vh;
@@ -62,7 +63,7 @@ const User = () => {
 
     const { address, setAddress, name, setName, phone, setPhone, setCofirm } = useContext(CustomerContext)
     const { isLoaded } = useLoadScript({
-        googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+        googleMapsApiKey: "AIzaSyDRX0D21tjCpNmpABQp8bnfNyA99pscQrM",
     });
 
     const handleSubmit = (e) => {
@@ -138,6 +139,7 @@ function Map() {
     const center = useMemo(() => ({ lat: 44, lng: -80 }), []);
 
     return (
+
         <GoogleMap zoom={10} center={center} mapContainerClassName="map-container">
             <Marker position={center} />
         </GoogleMap>

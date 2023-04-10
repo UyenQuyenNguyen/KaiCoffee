@@ -7,6 +7,7 @@ import styled from "styled-components";
 import Divider from '@mui/material/Divider';
 import { CustomerContext } from "../Context/customercontext";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FormatPrice from "../../Helpers/FormatPrice";
 
 
 const Bill = styled.div`
@@ -143,7 +144,7 @@ const BillToPay = () => {
                         <Total>
                             <h3>Payment: Cash</h3>
                             <div>
-                                <h3 style={{ marginBottom: "16px" }}>Total: {total}</h3>
+                                <h3 style={{ marginBottom: "16px" }}>Total: <FormatPrice price={total}/></h3>
                                 <Buy onClick={() => { setConfirm(true) }}>Confirm</Buy></div>
                         </Total>
                         <Thank>In a city filled with so many choices, we thank you for choosing us. Please feel tree to contact us at hotline: +0849031089 (Mr Duc - Brand Manager) if you encounter any problems related to our services. We are happy to serve you!</Thank>

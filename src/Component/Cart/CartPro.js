@@ -3,8 +3,7 @@ import { CartContext } from "../Context/cartcontext"
 import styled from "styled-components";
 import { Container } from "@mui/material";
 import { Link } from 'react-router-dom';
-import Alert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
+import FormatPrice from "../../Helpers/FormatPrice";
 
 const Card = styled.div`
     width: 100%;
@@ -128,7 +127,7 @@ const CartPro = () => {
                 )}
                 {state.length > 0 && (
                     <Total>
-                        <h3 style={{ margin: "16px 0" }}>Total: {total}</h3>
+                        <h3 style={{ margin: "16px 0" }}>Total: <FormatPrice price={total}/></h3>
                         <Link to="/InforUser"><Buy>Order</Buy></Link>
                     </Total>
                 )

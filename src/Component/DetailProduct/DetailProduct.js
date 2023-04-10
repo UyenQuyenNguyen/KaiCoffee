@@ -7,6 +7,9 @@ import { CartContext } from "../Context/cartcontext";
 import { FavouContext } from "../Context/favoucontext";
 import IconButton from '@mui/material/IconButton';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FormatPrice from "../../Helpers/FormatPrice";
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 const ViewHeight = styled.div`
     min-height: 68vh;
@@ -39,7 +42,9 @@ const FeatureBtn = styled.div`
     align-items: center;
 `
 
-
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 const API = "https://642c508e208dfe25472d4c1e.mockapi.io/api/v1/Product"
 const SingleProduct = () => {
     const { getSingleProduct, isSingleLoading, singleProduct } = React.useContext(AppContext)
@@ -61,6 +66,26 @@ const SingleProduct = () => {
     const Favoustate = React.useContext(FavouContext);
     const getFavou = Favoustate.dispatch;
 
+    const [open, setOpen] = React.useState(false);
+    const Favou = () => {
+        setOpen(true);
+        getFavou({ type: "ADD", payload: singleProduct })
+    };
+
+    const Cart = () => {
+        setOpen(true);
+        dispatch({ type: "ADD", payload: singleProduct })
+    }
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
+
     React.useEffect(() => {
         getSingleProduct(`${API}?id=${id}`);
     }, [])
@@ -76,11 +101,11 @@ const SingleProduct = () => {
                         <InfoProduct>
                             <h1>{name}</h1>
                             <p>{description}</p>
-                            <p>{price}VND</p>
+                            <p><FormatPrice price={price} /></p>
                             <FeatureBtn>
-                                <Buy onClick={() => { dispatch({ type: "ADD", payload: singleProduct }) }}>Add to Cart</Buy>
+                                <Buy onClick={Cart}>Add to Cart</Buy>
                                 <IconButton sx={{ width: '52px', height: "52px" }}
-                                    onClick={() => getFavou({ type: "ADD", payload: singleProduct })}   >
+                                    onClick={Favou}   >
                                     <FavoriteBorderIcon />
                                 </IconButton>
                             </FeatureBtn>
@@ -93,6 +118,11 @@ const SingleProduct = () => {
 
                     </>
                 )}
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="success" sx={{ width: '100%', backgroundColor: "#206f82" }}>
+                        Item has been added !
+                    </Alert>
+                </Snackbar>
             </ViewHeight>
         </Container>
 

@@ -19,7 +19,7 @@ const Img = styled.img`
     width: 120px;
 `
 const Des = styled.div`
-    width: 50%;
+    width: 24rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -69,7 +69,7 @@ const Empty = styled.div`
 `
 
 const ViewHeight = styled.div`
-    min-height: 50vh;
+    min-height: 68vh;
 `
 
 const Favo = () => {
