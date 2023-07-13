@@ -18,20 +18,20 @@ const H2 = styled.h2`
     font-size: 56px;
 `
 
-function FirstSection(props) {
+function FirstSection() {
     let items =
         [
             {
                 id: 1,
-                img: "https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-6/339795745_793490061708875_8156622442199661894_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=730e14&_nc_ohc=wyzEHi3GJgYAX_unfLF&_nc_ht=scontent.fsgn2-5.fna&oh=00_AfBXHjuSwwp_UotAPVtw2UiJwCZUC1pFP8SfRsRX4cYJlQ&oe=6431FC8F",
+                img: "'../../images/1.jpg'",
             },
             {
                 id: 2,
-                img: "https://scontent.fsgn2-3.fna.fbcdn.net/v/t39.30808-6/338969693_600010365510472_6322442890277611161_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=730e14&_nc_ohc=6eWLC8961t0AX_jZglj&_nc_ht=scontent.fsgn2-3.fna&oh=00_AfCN-omLHsEgZcifmkfPUR96XBAASYcBW7cDlAlt1dNLMw&oe=64333E15",
+                img: "'../../images/2.jpg'",
             },
             {
                 id: 3,
-                img: "https://scontent.fsgn2-4.fna.fbcdn.net/v/t39.30808-6/339726223_5829810277116868_6406415956402195174_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=730e14&_nc_ohc=P9abzXmRfNAAX-rutLa&_nc_ht=scontent.fsgn2-4.fna&oh=00_AfAsmll4I-aXeXlZHCxGLby7yt3pfE5-L1JqxiMnmVY74A&oe=6432B296",
+                img: "'../../images/3.jpg'",
             }
         ]
     return (
@@ -39,7 +39,7 @@ function FirstSection(props) {
         <Carousel>
             {
                 items.map((item) => <Card key={item.id}>
-                    <img src={item.img} alt={item.name}/> 
+                    <img src={require(`../../images/${item.id}.jpg`)} alt={item.name} />
                 </Card>)
             }
         </Carousel>

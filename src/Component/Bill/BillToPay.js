@@ -96,11 +96,21 @@ const Column = styled.div`
 
 const BillToPay = () => {
     const { address, name, phone, isConfirm, setConfirm } = useContext(CustomerContext);
+    console.log(isConfirm);
     const Globalstate = React.useContext(CartContext);
     const state = Globalstate.state;
+    const dispatch = Globalstate.dispatch;
     const total = state.reduce((total, item) => {
         return total + item.price * item.quantity;
     }, 0)
+
+    const clickReset = () => {
+        setConfirm(false);
+        state.map((item, id) => {
+            return dispatch({ type: "REMOVE", payload: item })
+        })
+    }
+
     return (
         <Container maxWidth="md" sx={{ height: "100%", paddingTop: '7rem', display: 'flex', justifyContent: 'center', boxSizing: 'border-box' }}>
             <Height>
@@ -108,7 +118,7 @@ const BillToPay = () => {
                     <Column>
                         <img style={{ width: "350px" }} src={require('../../images/delivery.png')} />
                         <h1 style={{ marginBottom: "16px" }}>Your order is being delivered to you <FavoriteBorderIcon /></h1>
-                        <Link to="/"><Buy>Go to Home</Buy></Link>
+                        <Link to="/"><Buy onClick={() => { clickReset() }}>Go to Home</Buy></Link>
                     </Column>
                 ) : (
                     <Bill>
@@ -144,7 +154,7 @@ const BillToPay = () => {
                         <Total>
                             <h3>Payment: Cash</h3>
                             <div>
-                                <h3 style={{ marginBottom: "16px" }}>Total: <FormatPrice price={total}/></h3>
+                                <h3 style={{ marginBottom: "16px" }}>Total: <FormatPrice price={total} /></h3>
                                 <Buy onClick={() => { setConfirm(true) }}>Confirm</Buy></div>
                         </Total>
                         <Thank>In a city filled with so many choices, we thank you for choosing us. Please feel tree to contact us at hotline: +0849031089 (Mr Duc - Brand Manager) if you encounter any problems related to our services. We are happy to serve you!</Thank>

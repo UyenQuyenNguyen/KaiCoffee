@@ -87,8 +87,6 @@ export const FilterProvider = ({ children }) => {
     const updateFilterValue = (event) => {
         let name = event.target.name;
         let value = event.target.value;
-        console.log(name);
-        console.log(value);
         return dispatch({ type: "UPDATE_FILTERS_VALUE", payload: { name, value } });
     };
 

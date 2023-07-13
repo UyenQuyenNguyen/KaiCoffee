@@ -4,6 +4,9 @@ import styled from "styled-components";
 import { Container } from "@mui/material";
 import { Link } from 'react-router-dom';
 import { FavouContext } from "../Context/favoucontext";
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import React from "react";
 
 
 const Card = styled.div`
@@ -72,17 +75,37 @@ const ViewHeight = styled.div`
     min-height: 68vh;
 `
 
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 const Favo = () => {
     const Favoustate = useContext(FavouContext);
     const state = Favoustate.state;
     const dispatch = Favoustate.dispatch;
     const Globalstate = useContext(CartContext);
     const Glodispatch = Globalstate.dispatch;
+    const [open, setOpen] = React.useState(false);
+
+
+    const Cart = (item) => {
+        setOpen(true);
+        Glodispatch({ type: "ADD", payload: item })
+    }
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
     return (
         <Container maxWidth="lg" sx={{ paddingTop: "7rem", display: "flex", flexDirection: "column" }}>
             <ViewHeight>
                 {state.map((item, index) => {
-                    return <Card>
+                    return <Card key={index}>
                         <Info>
                             <Img src={item.img} alt="" />
                             <Des>
@@ -91,7 +114,7 @@ const Favo = () => {
                             </Des>
                         </Info>
                         <Price>
-                            <Buy onClick={() => Glodispatch({ type: "ADD", payload: item })}>Add to Cart</Buy>
+                            <Buy onClick={() => Cart(item)}>Add to Cart</Buy>
                             <RmBtn onClick={() => dispatch({ type: "REMOVE", payload: item })}>Remove</RmBtn>
                         </Price>
                     </Card>
@@ -102,6 +125,11 @@ const Favo = () => {
                         <Link to="/Shop"><Buy>Go to Shop</Buy></Link>
                     </Empty>
                 )}
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="success" sx={{ width: '100%', backgroundColor: "#206f82" }}>
+                        Item has been added !
+                    </Alert>
+                </Snackbar>
             </ViewHeight>
         </Container>
     )

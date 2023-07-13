@@ -62,7 +62,6 @@ function Header() {
     }));
 
     const { login} = useContext(LoginContext)
-    console.log(login);
 
 
     return (
@@ -112,8 +111,8 @@ function Header() {
                     </Box>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page, id) => (
-                            <Link style={{ textDecoration: 'none' }} to={page.link}><Button
-                                key={id}
+                            <Link style={{ textDecoration: 'none' }} to={page.link} key={id}><Button
+                                
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'black', textDecoration: 'none', display: 'block', marginLeft: '24px', fontSize: '12px' }}
                             >
