@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useContext, useReducer } from "react";
 import { createContext, useEffect } from "react";
+import { getallProducts } from "../../services/product";
 
 export const AppContext = createContext();
-const API = "https://642c508e208dfe25472d4c1e.mockapi.io/api/v1/Product";
 
 const initialState = {
     isLoading: false,
@@ -62,11 +62,11 @@ const reducer = (state, action) => {
 
 const AppProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
-    const getProducts = async (url) => {
+    const getProducts = async () => {
         dispatch({ type: "SET_LOADING" })
         try {
-            const res = await axios.get(url);
-            const products = await res.data;
+            const response = await getallProducts();
+            const products = await response.data.products;
             dispatch({ type: "SET_API_DATA", payload: products });
         } catch (error) {
             dispatch({ type: "API_ERROR" })
@@ -74,11 +74,11 @@ const AppProvider = ({ children }) => {
 
     }
 
-    const getSingleProduct = async (url) => {
+    const getSingleProduct = async () => {
         dispatch({ type: "SET_SINGLE_LOADING" });
         try {
-            const res = await axios.get(url);
-            const singleProduct = await res.data;
+            const response = await getallProducts();
+            const singleProduct = await response.data.products;
             dispatch({ type: "SET_SINGLE_PRODUCT", payload: singleProduct[0] });
         } catch (error) {
             dispatch({ type: "SET_SINGLE_ERROR" })
@@ -86,10 +86,10 @@ const AppProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        getProducts(API);
+        getProducts();
     }, [])
 
-    return <AppContext.Provider value={{ ...state, getSingleProduct }}>
+    return <AppContext.Provider value={{ ...state, getSingleProduct}}>
         {children}
     </AppContext.Provider>
 };

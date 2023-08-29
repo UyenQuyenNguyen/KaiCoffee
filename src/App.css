@@ -5,3 +5,67 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+.flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.process{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.notfound{
+    width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+}
+
+.flex-column-center{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper{
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text-mute{
+    font-size: 14px;
+    font-weight: lighter;
+}
+
+.form-err{
+    font-size: 12px;
+    font-weight: normal;
+    color: red;
+}
+
+a{
+    text-decoration: none;
+    color: unset;
+}
+
+.font-bold{
+    font-weight: bold;
+}
+.btn_tool{
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.swal2-confirm{
+    background-color: #206f82 !important;
+}

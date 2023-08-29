@@ -116,13 +116,13 @@ const BillToPay = () => {
             <Height>
                 {isConfirm ? (
                     <Column>
-                        <img style={{ width: "350px" }} src={require('../../images/delivery.png')} />
+                        <img style={{ width: "350px" }} src='images/delivery.png' />
                         <h1 style={{ marginBottom: "16px" }}>Your order is being delivered to you <FavoriteBorderIcon /></h1>
                         <Link to="/"><Buy onClick={() => { clickReset() }}>Go to Home</Buy></Link>
                     </Column>
                 ) : (
                     <Bill>
-                        <img style={{ width: '8rem' }} src={require("../../images/MyLogo.png")} alt="" />
+                        <img style={{ width: '8rem' }} src="/images/MyLogo.png" alt="" />
                         <h1>Kai Coffee</h1>
                         <P>Store: 138 Nguyen Oanh | Phone: (028) 2245.0303</P>
                         <p>Free wifi password: stayhealthy</p>

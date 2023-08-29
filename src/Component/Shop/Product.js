@@ -1,5 +1,4 @@
- 
-import { Container } from '@mui/material';
+ import { Container } from '@mui/material';
 import styled from "styled-components";
 import Sort from "./Sort";
 import ProductList from "./ProductList";

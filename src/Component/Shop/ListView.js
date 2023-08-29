@@ -5,6 +5,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Link, NavLink } from 'react-router-dom';
+import { CircularProgress } from '@mui/material';
 import { CartContext } from '../Context/cartcontext';
 import { LoginContext } from '../Context/logincontext';
 import { FavouContext } from '../Context/favoucontext';
@@ -49,7 +50,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 
-const ListView = ({ products }) => {
+const ListView = ({ products, loading }) => {
 
     const Globalstate = React.useContext(CartContext);
     const dispatch = Globalstate.dispatch;
@@ -77,46 +78,48 @@ const ListView = ({ products }) => {
     const { login } = React.useContext(LoginContext)
     return (
         <>
-            <List>
-                {products.map((item, index) => {
-                    item.quantity = 1;
-                    return (
-                        <Card>
-                            <Flex>
-                                <div>
-                                    <Link to={`/DetailProduct/${item.id}`}><img style={{ width: '250px', marginRight: "2rem" }} src={item.img} alt="" /></Link>
-                                </div>
-                                <Des_pro>
-                                    <h3 style={{ margin: "8px 0" }}>{item.name}</h3>
-                                    <p style={{ margin: "8px 0" }}>{item.description}</p>
-                                    <p><FormatPrice price={item.price} /></p>
-                                </Des_pro>
-                            </Flex>
-                            <BtnFeature>
-                                <IconButton sx={{ width: '52px', height: "52px" }}
-                                    onClick={() => Favou(item)}>
-                                    <FavoriteBorderIcon />
-                                </IconButton>
-                                <IconButton
-                                    sx={{ width: '52px', height: "52px" }}
-                                    onClick={() => { Cart(item) }}
-                                >
-                                    <AddShoppingCartOutlinedIcon />
-                                </IconButton>
+           {!loading ? (
+                <List>
+                    {products.map((item, index) => {
+                        item.quantity = 1;
+                        return (
+                            <Card>
+                                <Flex>
+                                    <div>
+                                        <Link to={`/DetailProduct/${item.id}`}><img style={{ width: '250px', marginRight: "2rem" }} src={item.img} alt="" /></Link>
+                                    </div>
+                                    <Des_pro>
+                                        <h3 style={{ margin: "8px 0" }}>{item.name}</h3>
+                                        <p style={{ margin: "8px 0" }}>{item.description}</p>
+                                        <p><FormatPrice price={item.price} /></p>
+                                    </Des_pro>
+                                </Flex>
+                                <BtnFeature>
+                                    <IconButton sx={{ width: '52px', height: "52px" }}
+                                        onClick={() => Favou(item)}>
+                                        <FavoriteBorderIcon />
+                                    </IconButton>
+                                    <IconButton
+                                        sx={{ width: '52px', height: "52px" }}
+                                        onClick={() => { Cart(item) }}
+                                    >
+                                        <AddShoppingCartOutlinedIcon />
+                                    </IconButton>
 
-                                <Link to={`/DetailProduct/${item.id}`}><IconButton sx={{ width: '52px', height: "52px" }}>
-                                    <VisibilityOutlinedIcon />
-                                </IconButton></Link>
-                            </BtnFeature>
-                        </Card>
-                    )
-                })}
-                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                    <Alert onClose={handleClose} severity="success" sx={{ width: '100%', backgroundColor: "#206f82" }}>
-                        Item has been added !
-                    </Alert>
-                </Snackbar>
-            </List>
+                                    <Link to={`/DetailProduct/${item.id}`}><IconButton sx={{ width: '52px', height: "52px" }}>
+                                        <VisibilityOutlinedIcon />
+                                    </IconButton></Link>
+                                </BtnFeature>
+                            </Card>
+                        )
+                    })}
+                    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                        <Alert onClose={handleClose} severity="success" sx={{ width: '100%', backgroundColor: "#206f82" }}>
+                            Item has been added !
+                        </Alert>
+                    </Snackbar>
+                </List>
+            ) : (<div className='process'><CircularProgress /></div>)}
         </>
     )
 }

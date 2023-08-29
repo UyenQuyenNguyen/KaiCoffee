@@ -2,7 +2,6 @@ import React from 'react';
 import Carousel from 'react-material-ui-carousel'
 import { Paper, Button, Typography } from '@mui/material'
 import styled, { ThemeContext, ThemeProvider } from 'styled-components';
-import { createTheme } from '@mui/system';
 
 const Card = styled.div`
     height: 100vh;
@@ -23,15 +22,15 @@ function FirstSection() {
         [
             {
                 id: 1,
-                img: "'../../images/1.jpg'",
+                img: "'/images/1.jpg'",
             },
             {
                 id: 2,
-                img: "'../../images/2.jpg'",
+                img: "'/images/2.jpg'",
             },
             {
                 id: 3,
-                img: "'../../images/3.jpg'",
+                img: "'/images/3.jpg'",
             }
         ]
     return (
@@ -39,7 +38,7 @@ function FirstSection() {
         <Carousel>
             {
                 items.map((item) => <Card key={item.id}>
-                    <img src={require(`../../images/${item.id}.jpg`)} alt={item.name} />
+                    <img src={`/images/${item.id}.jpg`} alt={item.name} />
                 </Card>)
             }
         </Carousel>

@@ -82,7 +82,7 @@ const User = () => {
                     {isLoaded ? (<Map />) : (<div>Loading...</div>)}
                 </LeftSide>
                 <RightSide>
-                    <img style={{ width: '10rem' }} src={require("../../images/MyLogo.png")} alt="" />
+                    <img style={{ width: '10rem' }} src="../../images/MyLogo.png" alt="" />
                     <Form onSubmit={handleSubmit}>
                         <Box
                             component="form"

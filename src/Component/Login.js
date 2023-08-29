@@ -9,7 +9,13 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { useRef, useState, useEffect } from 'react';
+import { Link, Navigate } from "react-router-dom";
 import { LoginContext } from "./Context/logincontext";
+import { signIn } from "../services/auth";
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import { useNavigate } from 'react-router-dom';
+
 
 const Main = styled.div`
     width: 100vw;
@@ -91,32 +97,57 @@ const Icon = styled.div`
     align-items: center;
     margin-bottom: 14px;
 `
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const Register = () => {
     const userRef = useRef();
     const errRef = useRef();
-    const [user, setUser] = useState("");
+    const navigate = useNavigate();
+    const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const [errMsg, setErrMsg] = useState("");
     const [success, setSucess] = useState(false);
-    const username = "UyenQuyen"
-    const paswrd = "quyen123"
-    const { login, setLogin } = React.useContext(LoginContext)
+    const { user, setUser } = React.useContext(LoginContext)
+    const [open, setOpen] = React.useState(false);
+    const [message, setMessage] = useState('');
+    const [status, setStatus] = useState('');
 
-    useEffect(() => {
-        userRef.current.focus();
-    }, [])
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
 
-    // setLogin(true);
+    const handleSignIn = async () => {
+        try{
+            const res = await signIn({ email: email, password: pass })
+            const { status, message } = res.data;
+            setStatus(status)
+            setMessage(message)
+            setOpen(true);
+            setSucess(true);
+            setUser(res.data.user)
+            localStorage.setItem('token', res.data.accessToken)
+            navigate('/')
+        } catch (error) {
+            if (error.response) {
+                const { status, message } = error.response.data;            
+                setStatus(status)
+                setMessage(message)
+                setOpen(true);
+            } else {
+                console.error(error);
+            }
+        }
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (user === username && pass === paswrd) {
-            setSucess(true);
+        handleSignIn();
 
-            console.log(login);
-        } else {
-            setErrMsg("Invailid username or password");
-        }
     }
 
     return (
@@ -143,7 +174,7 @@ const Register = () => {
             </LeftSide>
             {success ? (
                 <ResMain>
-                    <img src={require('../images/Logged.png')} alt="" />
+                    <img src='../images/Logged.png' alt="" />
                     <a href="/Shop">
                         <IconButton
                             sx={{
@@ -163,7 +194,7 @@ const Register = () => {
                 </ResMain>
             ) : (
                 <ResMain>
-                    <img style={{ width: "150px", marginTop: "-5rem" }} src={require('../images/MyLogo.png')} alt="" />
+                    <img style={{ width: "150px", marginTop: "-5rem" }} src='../images/MyLogo.png' alt="" />
                     <h1>Welcom to Kai</h1>
                     <Form onSubmit={handleSubmit}>
                         <Box
@@ -176,14 +207,14 @@ const Register = () => {
                             autoComplete="off"
                         >
                             <TextField
-                                id="username"
+                                id="email"
                                 ref={userRef}
                                 autoComplete="off"
-                                label="Username"
+                                label="Email"
                                 type="text"
-                                variant="filled"
-                                onChange={(e) => setUser(e.target.value)}
-                                value={user}
+                                variant="standard"
+                                onChange={(e) => setEmail(e.target.value)}
+                                value={email}
                                 required
                                 InputLabelProps={{ sx: { color: '#206f82' } }}
                             />
@@ -193,7 +224,7 @@ const Register = () => {
                                 type="password"
                                 onChange={(e) => setPass(e.target.value)}
                                 value={pass}
-                                variant="filled"
+                                variant="standard"
                                 required
                                 InputLabelProps={{ sx: { color: '#206f82' } }}
                             />
@@ -201,7 +232,7 @@ const Register = () => {
                         </Box>
                         <IconButton
                             sx={{
-                                width: "5rem", height: "5rem", color: "#206f82", marginBottom: "-4rem",
+                                width: "5rem", height: "5rem", color: "#206f82", marginBottom: "-3rem",
                                 backgroundColor: "transparent", boxShadow: "5px 5px 5px #206f82",
                                 '&:hover': {
                                     color: "white",
@@ -214,9 +245,15 @@ const Register = () => {
                             <LoginIcon />
                         </IconButton>
                     </Form>
-
+                    <p className="text-mute" style={{ marginTop: '4rem' }}>You don't have account? <Link to={'/register'} className="font-bold"> Register</Link></p>
                 </ResMain>
+
             )}
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity={status} sx={{ width: '100%', backgroundColor: "#206f82" }}>
+                    {message}
+                </Alert>
+            </Snackbar>
         </Main>
     )
 }

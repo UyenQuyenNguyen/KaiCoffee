@@ -16,7 +16,7 @@ const FeatureNav = styled.div`
 `
 
 const ProductList = () => {
-    const { filter_products, list_view, setGridView, setListView } = useContext(FilterContext)
+    const { filter_products, list_view, setGridView, setListView, isLoading } = useContext(FilterContext)
     return (
         <Box maxWidth="xl" sx={{ flexGrow: 1 }}>
             <FeatureNav>
@@ -32,10 +32,10 @@ const ProductList = () => {
 
             </FeatureNav>
             {list_view ? (
-                <ListView products={filter_products} />
+                <ListView products={filter_products} loading={isLoading} />
             ) : (
 
-                <GridView products={filter_products} />
+                <GridView products={filter_products} loading={isLoading} />
 
             )}
         </Box>

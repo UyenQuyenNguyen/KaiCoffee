@@ -33,7 +33,7 @@ const Footer = () => {
                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                     <Grid item xs={3}>
                         <Item sx={{ textAlign: "center" }}>
-                            <img src={require('../images/Logo2.png')} style={{ width: "50px" }} alt="" />
+                            <img src='../images/Logo2.png' style={{ width: "50px" }} alt="" />
                             <p style={{fontSize: '14px', margin: "12px 0"}}>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
                             <div>
                                 <a style={{ color: 'black', marginRight: '8px', textDecoration: 'none' }} href="https://www.facebook.com/uynwiin2502.03"><FacebookIcon sx={{ fontSize: '16px' }} /></a>
